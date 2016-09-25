@@ -12,6 +12,8 @@
 <body>
 	<h1>Lista de Produtos</h1>
 	<p>${sucesso}</p>
+	<a href="#">Meu carrinho (${carrinhoCompras.quantidade})</a>
+	<br/>
 	<table>
 		<tr>
 			<td>Título</td>

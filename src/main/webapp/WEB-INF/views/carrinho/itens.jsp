@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +50,8 @@
 				<nav id="main-nav">
 
 					<ul class="clearfix">
-						<li><a href="/carrinho" rel="nofollow">Carrinho (
+						
+						<li><a href="<c:url value='/carrinho' />" rel="nofollow">Carrinho (
 								${carrinhoCompras.quantidade} )</a></li>
 
 						<li><a href="/pages/sobre-a-casa-do-codigo" rel="nofollow">Sobre
@@ -117,9 +119,9 @@
 							value="${carrinhoCompras.getQuantidade(item) }" /></td>
 						<td class="numeric-cell">${carrinhoCompras.getTotal(item)}</td>
 						<td class="remove-item">
-							<form action="" method="post">
-								<input type="image" src="/excluir.png" alt="Excluir"
-									title="Excluir" />
+							<form action="${s:mvcUrl('CC#remover').arg(0, item.produto.id).arg(1,item.tipoPreco).build() }"
+								method="post">
+								<input type="image" src="/excluir.png" alt="Excluir" title="Excluir" />
 							</form>
 						</td>
 					</tr>
@@ -127,8 +129,11 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="3"><input type="submit" class="checkout"
-						name="checkout" value="Finalizar compra" /></td>
+					<td colspan="3">
+						<form action="${s:mvcUrl('PC#finalizar').build()}" method="post">
+							<input type="submit" class="checkout" name="checkout"
+								value="Finalizar compra" />
+						</form>
 					<td class="numeric-cell">${carrinhoCompras.total}</td>
 					<td></td>
 				</tr>

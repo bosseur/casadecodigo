@@ -6,15 +6,22 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import br.com.casadocodigo.loja.daos.ProdutoDAO;
+
 @Component
-@Scope(value=WebApplicationContext.SCOPE_SESSION)
+@Scope(value=WebApplicationContext.SCOPE_SESSION, proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class CarrinhoCompras implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private ProdutoDAO dao;
 	
 	private Map<CarrinhoItem, Integer> itens;
 	
@@ -52,5 +59,11 @@ public class CarrinhoCompras implements Serializable{
     public BigDecimal getTotal(CarrinhoItem item){
         return item.getTotal(getQuantidade(item));
     }
+
+	public void remover(Integer produtoId, TipoPreco tipoPreco) {
+		Produto produto = dao.find(produtoId);
+		itens.remove(new CarrinhoItem(produto, tipoPreco));
+		
+	}
 	
 }

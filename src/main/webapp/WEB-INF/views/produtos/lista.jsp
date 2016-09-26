@@ -12,7 +12,8 @@
 <body>
 	<h1>Lista de Produtos</h1>
 	<p>${sucesso}</p>
-	<a href="#">Meu carrinho (${carrinhoCompras.quantidade})</a>
+	<p>${message}</p>
+	<a href="<c:url value='/carrinho' />">Meu carrinho (${carrinhoCompras.quantidade})</a>
 	<br/>
 	<table>
 		<tr>

@@ -18,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.google.common.cache.CacheBuilder;
@@ -33,8 +35,16 @@ import br.com.casadocodigo.loja.models.CarrinhoCompras;
 @EnableWebMvc
 @EnableCaching
 @ComponentScan(basePackageClasses = {PagamentoController.class, CarrinhoControler.class, HomeController.class, ProdutosController.class,CarrinhoCompras.class, ProdutoDAO.class, FileSaver.class })
-public class AppWebConfiguration {
+public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 
+	@Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/css/**").addResourceLocations("/resources/css/").setCachePeriod(31556926);
+        registry.addResourceHandler("/resources/images/**").addResourceLocations("/resources/imagens/").setCachePeriod(31556926);
+        registry.addResourceHandler("/resources/js/**").addResourceLocations("/resources/js/").setCachePeriod(31556926);
+    }
+
+	
 	@Bean
 	public CacheManager cacheManager(){
 	  CacheBuilder<Object, Object> builder = CacheBuilder.newBuilder().maximumSize(100).expireAfterAccess(5, TimeUnit.MINUTES);

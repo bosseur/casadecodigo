@@ -110,7 +110,7 @@
 					</c:forEach>
 				</ul>
 				<button type="submit" class="submit-image icon-basket-alt"
-					value="Compre Agora" title="Compre Agora${produto.titulo}">Compre Agora</button>
+					value="Compre Agora" title="Compre Agora ${produto.titulo}"></button>
 			</form>
 
 		</section>

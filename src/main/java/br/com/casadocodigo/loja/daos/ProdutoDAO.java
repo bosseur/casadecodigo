@@ -23,7 +23,7 @@ public class ProdutoDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Produto> listar(){
-		return manager.createQuery("select p from Produto p order by titulo", Produto.class).getResultList();
+		return manager.createQuery("select distinct(p) from Produto p join fetch p.precos order by p.titulo", Produto.class).getResultList();
 	}
 
 	public Produto find(int id) {

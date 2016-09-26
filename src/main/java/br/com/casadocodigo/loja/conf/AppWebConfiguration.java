@@ -1,7 +1,11 @@
 package br.com.casadocodigo.loja.conf;
 
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +20,8 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.google.common.cache.CacheBuilder;
+
 import br.com.casadocodigo.loja.component.FileSaver;
 import br.com.casadocodigo.loja.controllers.CarrinhoControler;
 import br.com.casadocodigo.loja.controllers.HomeController;
@@ -25,9 +31,18 @@ import br.com.casadocodigo.loja.daos.ProdutoDAO;
 import br.com.casadocodigo.loja.models.CarrinhoCompras;
 
 @EnableWebMvc
+@EnableCaching
 @ComponentScan(basePackageClasses = {PagamentoController.class, CarrinhoControler.class, HomeController.class, ProdutosController.class,CarrinhoCompras.class, ProdutoDAO.class, FileSaver.class })
 public class AppWebConfiguration {
 
+	@Bean
+	public CacheManager cacheManager(){
+	  CacheBuilder<Object, Object> builder = CacheBuilder.newBuilder().maximumSize(100).expireAfterAccess(5, TimeUnit.MINUTES);
+	  GuavaCacheManager manager = new GuavaCacheManager();
+	  manager.setCacheBuilder(builder);
+	  return manager;
+	}
+	
 	@Bean
     public RestTemplate restTemplate(){
         return new RestTemplate();

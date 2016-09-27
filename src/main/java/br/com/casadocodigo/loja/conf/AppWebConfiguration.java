@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.h2.tools.Server;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.guava.GuavaCacheManager;
@@ -35,13 +36,15 @@ import br.com.casadocodigo.loja.controllers.HomeController;
 import br.com.casadocodigo.loja.controllers.PagamentoController;
 import br.com.casadocodigo.loja.controllers.ProdutosController;
 import br.com.casadocodigo.loja.daos.ProdutoDAO;
+import br.com.casadocodigo.loja.daos.UsuarioDAO;
 import br.com.casadocodigo.loja.models.CarrinhoCompras;
 
 @EnableWebMvc
 @EnableCaching
-@ComponentScan(basePackageClasses = {PagamentoController.class, CarrinhoControler.class, HomeController.class, ProdutosController.class,CarrinhoCompras.class, ProdutoDAO.class, FileSaver.class })
+@ComponentScan(basePackageClasses = {UsuarioDAO.class, PagamentoController.class, CarrinhoControler.class, HomeController.class, ProdutosController.class,CarrinhoCompras.class, ProdutoDAO.class, FileSaver.class })
 public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 
+	
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/css/**").addResourceLocations("/resources/css/").setCachePeriod(31556926);
@@ -99,8 +102,8 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 	}
 	
 	@Bean(initMethod = "start", destroyMethod = "stop")
-	public org.h2.tools.Server h2WebConsonleServer() throws SQLException {
-		return org.h2.tools.Server.createWebServer("-web", "-webAllowOthers", "-webDaemon", "-webPort", "8082");
+	public Server h2WebConsonleServer() throws SQLException {
+		return Server.createWebServer("-web", "-webAllowOthers", "-webDaemon", "-webPort", "8082");
 	}
 
 	@Bean

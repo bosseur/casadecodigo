@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"  %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 
 <!DOCTYPE html>
@@ -46,6 +47,7 @@ body {
 				</button>
 				<a class="navbar-brand" href="${s:mvcUrl('HC#index').build() }">Casa do Código</a>
 			</div>
+			<sec:authorize access="hasRole('ADMIN')">
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
@@ -55,11 +57,12 @@ body {
 							Produtos</a></li>
 				</ul>
 			</div>
+			</sec:authorize>
 			<!-- /.navbar-collapse -->
 		</div>
 	</nav>
 	<div class="container">
-		<form:form action="${ s:mvcUrl('PC#gravar').build() }" method="post"
+		<form:form servletRelativeAction="${ s:mvcUrl('PC#gravar').build() }" method="post" 
 			commandName="produto" enctype="multipart/form-data">
 			<div class="form-group">
 				<label>Título</label>

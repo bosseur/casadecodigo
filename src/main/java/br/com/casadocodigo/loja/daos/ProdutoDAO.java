@@ -21,7 +21,6 @@ public class ProdutoDAO {
 		manager.persist(produto);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Produto> listar(){
 		return manager.createQuery("select distinct(p) from Produto p join fetch p.precos order by p.titulo", Produto.class).getResultList();
 	}

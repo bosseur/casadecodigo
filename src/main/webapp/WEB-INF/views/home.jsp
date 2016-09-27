@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"  %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <!DOCTYPE html>
@@ -50,8 +51,9 @@
 			<a href="/" id="logo"> </a>
 			<div id="header-content">
 				<nav id="main-nav">
-
+				
 					<ul class="clearfix">
+						<sec:authorize access="isAuthenticated()">
 						<li><a href="/cart" rel="nofollow">Carrinho</a></li>
 
 						<li><a href="/pages/sobre-a-casa-do-codigo" rel="nofollow">Sobre
@@ -59,6 +61,7 @@
 
 						<li><a href="/pages/perguntas-frequentes" rel="nofollow">Perguntas
 								Frequentes</a></li>
+						</sec:authorize>
 					</ul>
 				</nav>
 			</div>

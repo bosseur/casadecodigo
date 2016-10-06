@@ -99,8 +99,8 @@
 
 
 		<section class="buy-options clearfix">
-			<form:form action="${s:mvcUrl('CC#add').build() }" method="post" class="container" commandName="produto">
-				<form:hidden path="id" name="produtoId" value="${produto.id }"/>
+			<form:form servletRelativeAction="/carrinho/add" method="post" class="container" >
+				<input type="hidden" name="produtoId" value="${produto.id}" />
 				<ul id="variants" class="clearfix">
 					<c:forEach items="${produto.precos}" var="preco">
 						<li class="buy-option">

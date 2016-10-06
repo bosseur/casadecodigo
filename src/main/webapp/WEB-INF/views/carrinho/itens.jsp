@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +52,7 @@
 
 					<ul class="clearfix">
 						
-						<li><a href="<c:url value='/carrinho' />" rel="nofollow">Carrinho (
+						<li><a href="<c:url value='carrinho' />" rel="nofollow">Carrinho (
 								${carrinhoCompras.quantidade} )</a></li>
 
 						<li><a href="/pages/sobre-a-casa-do-codigo" rel="nofollow">Sobre
@@ -119,10 +120,12 @@
 							value="${carrinhoCompras.getQuantidade(item) }" /></td>
 						<td class="numeric-cell">${carrinhoCompras.getTotal(item)}</td>
 						<td class="remove-item">
-							<form action="${s:mvcUrl('CC#remover').arg(0, item.produto.id).arg(1,item.tipoPreco).build() }"
+							<form:form servletRelativeAction="/carrinho/remover"
 								method="post">
-								<input type="image" src="/excluir.png" alt="Excluir" title="Excluir" />
-							</form>
+								<input type="hidden" name="produtoId" value="${item.produto.id }">
+								<input type="hidden" name="tipoPreco" value="${item.tipoPreco}">
+								<input type="image" src="/resources/imagens/excluir.png" alt="Excluir" title="Excluir" />
+							</form:form>
 						</td>
 					</tr>
 				</c:forEach>
@@ -130,10 +133,10 @@
 			<tfoot>
 				<tr>
 					<td colspan="3">
-						<form action="${s:mvcUrl('PC#finalizar').build()}" method="post">
+						<form:form servletRelativeAction="/pagamento/finalizar" method="post">
 							<input type="submit" class="checkout" name="checkout"
 								value="Finalizar compra" />
-						</form>
+						</form:form>
 					<td class="numeric-cell">${carrinhoCompras.total}</td>
 					<td></td>
 				</tr>

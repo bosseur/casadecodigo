@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class JPAConfiguration {
 
     @Bean
+    @Profile("desenv")
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
             .setType(EmbeddedDatabaseType.H2)
@@ -40,19 +42,9 @@ public class JPAConfiguration {
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter );
-
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setUsername("sa");
-//        dataSource.setPassword("");
-//        dataSource.setUrl("jdbc:h2:mem:mydb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
-//        dataSource.setDriverClassName("org.h2.Driver");
-
         factoryBean.setDataSource(dataSource());
 
-        Properties props = new Properties();
-        props.setProperty("hibernate.dialect" , "org.hibernate.dialect.H2Dialect");
-        props.setProperty("hibernate.show_sql", "true");
-        props.setProperty("hibernate.hbm2ddl.auto", "none");
+        Properties props = aditionalProperties();
 
         factoryBean.setJpaProperties(props);
 
@@ -61,4 +53,12 @@ public class JPAConfiguration {
         return factoryBean;
 
     }
+
+	private Properties aditionalProperties() {
+		Properties props = new Properties();
+        props.setProperty("hibernate.dialect" , "org.hibernate.dialect.H2Dialect");
+        props.setProperty("hibernate.show_sql", "true");
+        props.setProperty("hibernate.hbm2ddl.auto", "none");
+		return props;
+	}
 }

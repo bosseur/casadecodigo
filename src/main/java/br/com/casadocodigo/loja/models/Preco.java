@@ -25,11 +25,10 @@ public class Preco {
 	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Preco [valor=").append(valor).append(", tipo=").append(tipo).append("]");
-		return builder.toString();
+		return tipo.name() + " " + valor;
 	}
     
          
+	
     
 }

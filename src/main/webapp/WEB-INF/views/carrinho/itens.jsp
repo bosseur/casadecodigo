@@ -5,7 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
-
+<c:url value="/" var="contextPath" />
 <tags:pageTemplate titulo="Livros de Java, Android, IOs, Mobile e muito mais...">
 	<section class="container middle">
 		<h2 id="cart-title">Seu carrinho de compras</h2>
@@ -47,7 +47,7 @@
 								method="post">
 								<input type="hidden" name="produtoId" value="${item.produto.id }">
 								<input type="hidden" name="tipoPreco" value="${item.tipoPreco}">
-								<input type="image" src="/resources/imagens/excluir.png" alt="Excluir" title="Excluir" />
+								<input type="image" src="${contextPath}/resources/imagens/excluir.png" alt="Excluir" title="Excluir" />
 							</form:form>
 						</td>
 					</tr>

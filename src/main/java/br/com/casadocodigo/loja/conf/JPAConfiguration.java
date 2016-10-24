@@ -36,7 +36,7 @@ public class JPAConfiguration {
 	}
 	
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(Properties aditionalProperties) {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
 
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
@@ -44,7 +44,7 @@ public class JPAConfiguration {
         factoryBean.setJpaVendorAdapter(jpaVendorAdapter );
         factoryBean.setDataSource(dataSource());
 
-        Properties props = aditionalProperties();
+        Properties props = aditionalProperties;
 
         factoryBean.setJpaProperties(props);
 
@@ -54,7 +54,8 @@ public class JPAConfiguration {
 
     }
 
-	private Properties aditionalProperties() {
+    @Bean
+	public Properties aditionalProperties() {
 		Properties props = new Properties();
         props.setProperty("hibernate.dialect" , "org.hibernate.dialect.H2Dialect");
         props.setProperty("hibernate.show_sql", "true");

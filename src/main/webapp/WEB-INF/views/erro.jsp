@@ -3,10 +3,10 @@
 
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<tags:pageTemplate titulo="${produto.titulo}">
+<tags:pageTemplate titulo="Erro inesperado">
 
 	<section id="index-section" class="container middle">
-		<h2>Produto não encontrado</h2>
+		<h2>Erro na aplicação</h2>
 	</section>
 
 </tags:pageTemplate>
